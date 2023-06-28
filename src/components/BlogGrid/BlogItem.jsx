@@ -39,8 +39,8 @@ const BlogItem = ({ blog }) => {
 BlogItem.propTypes = {
   blog: PropTypes.shape({
     id: PropTypes.number,
-    title: PropTypes.text,
-    image: PropTypes.text,
+    title: PropTypes.string,
+    image: PropTypes.string,
     likes: PropTypes.number,
     tags: PropTypes.array,
     isSaved: PropTypes.bool,
