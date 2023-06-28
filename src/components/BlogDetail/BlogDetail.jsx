@@ -1,9 +1,14 @@
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import { changeBookmark } from '../../features/blog/blogSlice';
 
 const BlogDetail = ({ blog }) => {
-  const { title, image, likes, tags, isSaved, description } = blog;
+  const dispatch = useDispatch();
+  const { id, title, image, likes, tags, isSaved, description } = blog;
   const tagsText = tags.map((tag) => `#${tag}`).join(', ');
-
+  const toggleSaved = () => {
+    dispatch(changeBookmark({ id, isSaved: isSaved ? false : true }));
+  };
   return (
     <main className="post">
       <img
@@ -29,6 +34,7 @@ const BlogDetail = ({ blog }) => {
           <button
             className={`save-btn${isSaved && ' active'}`}
             id="lws-singleSavedBtn"
+            onClick={toggleSaved}
           >
             <i className="fa-regular fa-bookmark"></i>{' '}
             {isSaved ? 'Saved' : 'Save'}
@@ -44,7 +50,7 @@ const BlogDetail = ({ blog }) => {
 
 BlogDetail.propTypes = {
   blog: PropTypes.shape({
-    // id: PropTypes.number,
+    id: PropTypes.number,
     title: PropTypes.string,
     image: PropTypes.string,
     likes: PropTypes.number,

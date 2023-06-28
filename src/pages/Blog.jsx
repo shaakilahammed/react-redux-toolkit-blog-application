@@ -32,7 +32,7 @@ const Blog = () => {
     content = (
       <>
         <BlogDetail blog={blog} />
-        <RelatedBlogs currentBlogId={blogId} tags={blog?.tags} />
+        <RelatedBlogs currentBlogId={Number(blogId)} tags={blog?.tags} />
       </>
     );
   }
