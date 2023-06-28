@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getBlog, updateBookmark } from './blogAPI';
+import { getBlog, updateBookmark, updateLikes } from './blogAPI';
 
 const initialState = {
   blog: {},
@@ -17,6 +17,14 @@ export const changeBookmark = createAsyncThunk(
   'blog/changeBookmark',
   async ({ id, isSaved }) => {
     const blog = await updateBookmark(id, isSaved);
+    return blog;
+  }
+);
+
+export const changeLikes = createAsyncThunk(
+  'blog/liked',
+  async ({ id, likes }) => {
+    const blog = await updateLikes(id, likes);
     return blog;
   }
 );
@@ -42,6 +50,9 @@ const blogSlice = createSlice({
       });
     builder.addCase(changeBookmark.fulfilled, (state, action) => {
       state.blog.isSaved = action.payload.isSaved;
+    });
+    builder.addCase(changeLikes.fulfilled, (state, action) => {
+      state.blog.likes = action.payload.likes;
     });
   },
 });

@@ -1,13 +1,16 @@
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import { changeBookmark } from '../../features/blog/blogSlice';
+import { changeBookmark, changeLikes } from '../../features/blog/blogSlice';
 
 const BlogDetail = ({ blog }) => {
   const dispatch = useDispatch();
   const { id, title, image, likes, tags, isSaved, description } = blog;
   const tagsText = tags.map((tag) => `#${tag}`).join(', ');
   const toggleSaved = () => {
-    dispatch(changeBookmark({ id, isSaved: isSaved ? false : true }));
+    dispatch(changeBookmark({ id, isSaved }));
+  };
+  const handleLike = () => {
+    dispatch(changeLikes({ id, likes }));
   };
   return (
     <main className="post">
@@ -26,7 +29,11 @@ const BlogDetail = ({ blog }) => {
         </div>
         <div className="btn-group">
           {/* <!-- handle like on button click --> */}
-          <button className="like-btn" id="lws-singleLinks">
+          <button
+            className="like-btn"
+            id="lws-singleLinks"
+            onClick={handleLike}
+          >
             <i className="fa-regular fa-thumbs-up"></i> {likes}
           </button>
           {/* <!-- handle save on button click --> */}

@@ -7,7 +7,14 @@ export const getBlog = async (id) => {
 
 export const updateBookmark = async (id, isSaved) => {
   const response = await axios.patch(`/blogs/${id}`, {
-    isSaved,
+    isSaved: !isSaved,
+  });
+  return response.data;
+};
+
+export const updateLikes = async (id, likes) => {
+  const response = await axios.patch(`/blogs/${id}`, {
+    likes: likes + 1,
   });
   return response.data;
 };
