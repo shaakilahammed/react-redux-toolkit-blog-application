@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-const PostDetail = ({ blog }) => {
+const BlogDetail = ({ blog }) => {
   const { title, image, likes, tags, isSaved, description } = blog;
   const tagsText = tags.map((tag) => `#${tag}`).join(', ');
 
@@ -42,7 +42,7 @@ const PostDetail = ({ blog }) => {
   );
 };
 
-PostDetail.propTypes = {
+BlogDetail.propTypes = {
   blog: PropTypes.shape({
     // id: PropTypes.number,
     title: PropTypes.string,
@@ -54,4 +54,4 @@ PostDetail.propTypes = {
   }).isRequired,
 };
 
-export default PostDetail;
+export default BlogDetail;

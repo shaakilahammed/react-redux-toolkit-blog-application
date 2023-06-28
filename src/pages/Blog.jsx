@@ -1,11 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux';
-import PostDetail from '../components/PostDetail/PostDetail';
-import RightSidebar from '../components/RightSidebar/RightSidebar';
+import BlogDetail from '../components/BlogDetail/BlogDetail';
 import GoHome from '../components/UI/GoHome';
 import { useEffect } from 'react';
 import { fetchBlog } from '../features/blog/blogSlice';
 import { useParams } from 'react-router-dom';
 import Message from '../components/UI/Message';
+import RelatedBlogs from '../components/RelatedBlogs/RelatedBlogs';
 
 const Blog = () => {
   const dispatch = useDispatch();
@@ -31,8 +31,8 @@ const Blog = () => {
   if (!isLoading && !isError && blog?.id) {
     content = (
       <>
-        <PostDetail blog={blog} />
-        <RightSidebar />
+        <BlogDetail blog={blog} />
+        <RelatedBlogs currentBlogId={blogId} tags={blog?.tags} />
       </>
     );
   }
