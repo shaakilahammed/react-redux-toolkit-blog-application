@@ -4,7 +4,8 @@ import { changeBookmark, changeLikes } from '../../features/blog/blogSlice';
 
 const BlogDetail = ({ blog }) => {
   const dispatch = useDispatch();
-  const { id, title, image, likes, tags, isSaved, description } = blog;
+  const { id, title, image, likes, tags, isSaved, description, isUpdating } =
+    blog;
   const tagsText = tags.map((tag) => `#${tag}`).join(', ');
   const toggleSaved = () => {
     dispatch(changeBookmark({ id, isSaved }));
@@ -33,6 +34,7 @@ const BlogDetail = ({ blog }) => {
             className="like-btn"
             id="lws-singleLinks"
             onClick={handleLike}
+            disabled={isUpdating}
           >
             <i className="fa-regular fa-thumbs-up"></i> {likes}
           </button>
@@ -42,6 +44,7 @@ const BlogDetail = ({ blog }) => {
             className={`save-btn${isSaved && ' active'}`}
             id="lws-singleSavedBtn"
             onClick={toggleSaved}
+            disabled={isUpdating}
           >
             <i className="fa-regular fa-bookmark"></i>{' '}
             {isSaved ? 'Saved' : 'Save'}
@@ -64,6 +67,7 @@ BlogDetail.propTypes = {
     description: PropTypes.string,
     tags: PropTypes.array,
     isSaved: PropTypes.bool,
+    isUpdating: PropTypes.bool,
   }).isRequired,
 };
 

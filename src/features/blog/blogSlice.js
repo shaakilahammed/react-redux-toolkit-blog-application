@@ -5,6 +5,7 @@ const initialState = {
   blog: {},
   isLoading: false,
   isError: false,
+  isUpdating: false,
   error: '',
 };
 
@@ -44,16 +45,39 @@ const blogSlice = createSlice({
       })
       .addCase(fetchBlog.rejected, (state, action) => {
         state.isLoading = false;
-        state.blog = action.payload;
+        state.blog = {};
         state.isError = true;
         state.error = action.error?.message;
       });
-    builder.addCase(changeBookmark.fulfilled, (state, action) => {
-      state.blog.isSaved = action.payload.isSaved;
-    });
-    builder.addCase(changeLikes.fulfilled, (state, action) => {
-      state.blog.likes = action.payload.likes;
-    });
+    builder
+      .addCase(changeBookmark.pending, (state) => {
+        state.isUpdating = true;
+        state.isError = false;
+      })
+      .addCase(changeBookmark.fulfilled, (state, action) => {
+        state.isUpdating = false;
+        state.blog.isSaved = action.payload.isSaved;
+      })
+      .addCase(changeBookmark.rejected, (state, action) => {
+        state.isUpdating = false;
+        state.isError = true;
+        state.error = action.error?.message;
+      });
+
+    builder
+      .addCase(changeLikes.pending, (state) => {
+        state.isUpdating = true;
+        state.isError = false;
+      })
+      .addCase(changeLikes.fulfilled, (state, action) => {
+        state.isUpdating = false;
+        state.blog.likes = action.payload.likes;
+      })
+      .addCase(changeLikes.rejected, (state, action) => {
+        state.isUpdating = false;
+        state.isError = true;
+        state.error = action.error?.message;
+      });
   },
 });
 
